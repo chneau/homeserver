@@ -30,6 +30,8 @@ docker run --rm -it --name=draw -l="traefik.enable=true" -l='traefik.http.router
 # https://docs.docker.com/engine/reference/commandline/run/#publish-or-expose-port--p---expose
 docker run --restart=always -d --name=draw --expose 8080 chneau/draw
 docker run -d --restart always --no-healthcheck --security-opt apparmor=unconfined --name netdata --hostname netdata --cap-add SYS_PTRACE -v /etc/passwd:/host/etc/passwd:ro -v /etc/group:/host/etc/group:ro -v /proc:/host/proc:ro -v /sys:/host/sys:ro -v /etc/os-release:/host/etc/os-release:ro -v /var/run/docker.sock:/var/run/docker.sock:ro --expose 19999 netdata/netdata
+
+# to have *.nip.io to work on your computer, ensure to use popular dns like 8.8.8.8
 ```
 
 - http://netdata.192-168-1-5.nip.io/
