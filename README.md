@@ -41,6 +41,7 @@ mkdir -p ~/samba
 docker run -d --restart=always --name samba --hostname samba -e USERID=1000 -e GROUPID=1000 -e VETO=yes -p 139:139 -p 445:445 -p 137:137/udp -p 138:138/udp -v ~/samba:/c dperson/samba -p -n -r -u "c;c" -u "Sarah;c" -s "c;/c;no;no;no;c,Sarah;none;c,Sarah" -W
 
 # http://dl.192-168-1-5.nip.io/
+# http://dl.192-168-1-5.nip.io/ui
 mkdir -p ~/docker/aria2-ui/filebrowser/
 touch ~/docker/aria2-ui/filebrowser/filebrowser.db
 docker run -d --restart=always --name dl --expose 80 -v ~/docker/aria2-ui/filebrowser/filebrowser.db:/app/filebrowser.db -v ~/samba/:/data -e ENABLE_AUTH=true -e ARIA2_USER=c -e ARIA2_PWD=c -e ARIA2_SSL=false wahyd4/aria2-ui
@@ -49,3 +50,4 @@ docker run -d --restart=always --name dl --expose 80 -v ~/docker/aria2-ui/filebr
 - http://netdata.192-168-1-5.nip.io/
 - http://draw.192-168-1-5.nip.io/
 - http://dl.192-168-1-5.nip.io/
+- http://dl.192-168-1-5.nip.io/ui
