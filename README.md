@@ -48,3 +48,4 @@ docker run -d --restart=always --name dl --expose 80 -v ~/docker/aria2-ui/filebr
 
 - http://netdata.192-168-1-5.nip.io/
 - http://draw.192-168-1-5.nip.io/
+- http://dl.192-168-1-5.nip.io/
