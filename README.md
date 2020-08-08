@@ -33,14 +33,20 @@ docker run -d --restart always --no-healthcheck --security-opt apparmor=unconfin
 mkdir -p ~/docker/aria2-ui/filebrowser/
 touch ~/docker/aria2-ui/filebrowser/filebrowser.db
 docker run -d --restart=always --name dl --expose 80 -v ~/docker/aria2-ui/filebrowser/filebrowser.db:/app/filebrowser.db -v ~/samba/:/data -e ENABLE_AUTH=true -e ARIA2_USER=c -e ARIA2_PWD=c -e ARIA2_SSL=false -l="traefik.enable=true" wahyd4/aria2-ui
+
+# http://pyload.192-168-1-5.nip.io/
+docker run -l="traefik.enable=true" -l="traefik.http.services.pyload.loadbalancer.server.port=8000" --name=pyload -e PUID=1000 -e PGID=1000 -e TZ=Europe/London -v ~/samba:/downloads --restart always -d linuxserver/pyload
 ```
 
 - http://netdata.192-168-1-5.nip.io/
 - http://draw.192-168-1-5.nip.io/
 - http://dl.192-168-1-5.nip.io/
-- http://dl.192-168-1-5.nip.io/ui
+- http://pyload.192-168-1-5.nip.io/
 
 ```bash
+# pyloads needs to have a label to specify port number.
+# Plus, we need to specify the service name because a container could returns multiple ports = multiple services (logging, web, api..)
+
 # different examples
 
 docker run --rm -it --name traefik -p 8080:8080 -p 80:80 -v ~/docker/traefik.yml:/etc/traefik/traefik.yml -v /var/run/docker.sock:/var/run/docker.sock:ro traefik:v2.2
