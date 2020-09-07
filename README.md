@@ -52,7 +52,7 @@ docker run -l="traefik.enable=true" -l="traefik.http.services.pyload.loadbalance
 docker run --rm -it --name traefik -p 8080:8080 -p 80:80 -v ~/docker/traefik.yml:/etc/traefik/traefik.yml -v /var/run/docker.sock:/var/run/docker.sock:ro traefik:v2.2
 
 docker run --rm -it --name=whoami -l="traefik.enable=true" -l='traefik.http.routers.whoami.rule=Host(`whoami.192-168-1-5.nip.io`)' -l="traefik.http.routers.whoami.entrypoints=http" containous/whoami
-docker run --rm -it --name=draw -l="traefik.enable=true" -l='traefik.http.routers.whoami.rule=Host(`whoami.192-168-1-5.nip.io`)' -l="traefik.http.routers.draw.entrypoints=http" chneau/draw
+docker run --rm -it --name=draw -l="traefik.enable=true" -l='traefik.http.routers.draw.rule=Host(`draw.192-168-1-5.nip.io`)' -l="traefik.http.routers.draw.entrypoints=http" chneau/draw
 
 # net to expose port for traefik, notice that -p 8080 is different than --expose 8080
 # https://docs.docker.com/engine/reference/commandline/run/#publish-or-expose-port--p---expose
