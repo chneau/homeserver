@@ -12,6 +12,9 @@ Using samba to have a directory from windows to easily edit traefik config :)
 # traefik
 docker run --restart=always -d --name traefik -p 8080:8080 -p 80:80 -v /var/run/docker.sock:/var/run/docker.sock:ro traefik:v2.2 --providers.docker.exposedbydefault=false --accesslog=true
 
+# miniDLNA
+docker run -d --net=host --name=minidlna --hostname=minidlna --no-healthcheck -v /home/c/hdd:/media -e MINIDLNA_MEDIA_DIR=/media -e MINIDLNA_FRIENDLY_NAME=CHARLES vladgh/minidlna
+
 # samba
 mkdir -p ~/samba
 docker run -d --restart=always --name samba --hostname samba -e USERID=1000 -e GROUPID=1000 -e VETO=yes -p 139:139 -p 445:445 -p 137:137/udp -p 138:138/udp -v ~/:/c dperson/samba -p -n -r -u "c;c" -u "Sarah;c" -s "c;/c;no;no;no;c,Sarah;none;c,Sarah" -W
