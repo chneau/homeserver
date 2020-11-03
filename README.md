@@ -15,8 +15,12 @@ docker run -d --restart=always --name traefik -p 8080:8080 -p 80:80 -v /var/run/
 # miniDLNA
 docker run -d --restart=always --net=host --name=minidlna --hostname=minidlna --no-healthcheck -v /home/c/hdd:/media -e MINIDLNA_MEDIA_DIR=/media -e MINIDLNA_FRIENDLY_NAME=CHARLES vladgh/minidlna
 
+# root@neau.ddns.net
+docker run -d --restart=always --net=host --name=minidlna --hostname=minidlna --no-healthcheck -v /root/data:/media -e MINIDLNA_MEDIA_DIR=/media -e MINIDLNA_FRIENDLY_NAME=CHARLES vladgh/minidlna
+
 # or alternatively
 docker run -d --restart=always --net=host --name=dlna --hostname=dlna -v /home/c/hdd:/data rclone/rclone serve dlna --name CHARLES .
+docker run -d --restart=always --net=host --name=dlna --hostname=dlna -v /root/data:/data rclone/rclone serve dlna --name CHARLES .
 
 # samba
 mkdir -p ~/samba
