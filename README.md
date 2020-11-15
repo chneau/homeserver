@@ -10,7 +10,7 @@ Using samba to have a directory from windows to easily edit traefik config :)
 
 ```bash
 # traefik
-docker run -d --restart=always --name traefik -p 8080:8080 -p 80:80 -v /var/run/docker.sock:/var/run/docker.sock:ro traefik:v2.2 --providers.docker.exposedbydefault=false --accesslog=true
+docker run -d --restart=always --name traefik -p 80:80 -v /var/run/docker.sock:/var/run/docker.sock:ro traefik:v2.2 --providers.docker.exposedbydefault=false --accesslog=true
 
 # miniDLNA
 docker run -d --restart=always --net=host --name=minidlna --hostname=minidlna --no-healthcheck -v /home/c/hdd:/media -e MINIDLNA_MEDIA_DIR=/media -e MINIDLNA_FRIENDLY_NAME=CHARLES vladgh/minidlna
@@ -30,9 +30,8 @@ docker run -d --restart=always --name samba --hostname samba -e USERID=1000 -e G
 docker run -d --restart always --no-healthcheck --security-opt apparmor=unconfined --name netdata --hostname netdata --cap-add SYS_PTRACE -v /etc/passwd:/host/etc/passwd:ro -v /etc/group:/host/etc/group:ro -v /proc:/host/proc:ro -v /sys:/host/sys:ro -v /etc/os-release:/host/etc/os-release:ro -v /var/run/docker.sock:/var/run/docker.sock:ro -l='traefik.http.routers.netdata.rule=Host(`netdata.192-168-1-3.nip.io`) || Host(`chneau.ddns.net`) || Host(`192.168.1.3`)' -l="traefik.http.services.netdata.loadbalancer.server.port=19999" -l="traefik.enable=true" netdata/netdata
 
 # http://dl.192-168-1-3.nip.io/
-mkdir -p ~/docker/aria2-ui/filebrowser/
-touch ~/docker/aria2-ui/filebrowser/filebrowser.db
-docker run -d --restart=always --name dl -v ~/docker/aria2-ui/filebrowser/filebrowser.db:/app/filebrowser.db -v ~/samba/:/data -e ENABLE_AUTH=true -e ARIA2_USER=c -e ARIA2_PWD=c -e ARIA2_SSL=false -l='traefik.http.routers.dl.rule=Host(`dl.192-168-1-3.nip.io`) || Host(`oo`)' -l="traefik.http.services.dl.loadbalancer.server.port=80" -l="traefik.enable=true" wahyd4/aria2-ui
+mkdir -p ~/docker/aria2/conf/
+docker run -d --restart=always --name dl -v ~/docker/aria2/conf/:/aria2/conf/ -v ~/samba/:/aria2/data/ -l='traefik.http.routers.dl.rule=Host(`oo`)' -l="traefik.http.services.dl.loadbalancer.server.port=8080" -l="traefik.enable=true" hurlenko/aria2-ariang
 
 # watchtower
 docker run -d --restart=always --name=watchtower -v=/var/run/docker.sock:/var/run/docker.sock:ro containrrr/watchtower --cleanup
