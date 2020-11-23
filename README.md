@@ -4,6 +4,10 @@ Scripts to automatise installation of the home server
 
 Using samba to have a directory from windows to easily edit traefik config :)
 
+## TODO
+
+- [ ] TEST https://hub.docker.com/r/linuxserver/daapd
+
 ## traefik
 
 - https://hub.docker.com/_/traefik
