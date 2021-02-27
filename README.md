@@ -35,7 +35,8 @@ docker run -d --restart always --no-healthcheck --security-opt apparmor=unconfin
 
 # http://dl.192-168-1-3.nip.io/
 mkdir -p ~/docker/aria2/conf/
-docker run -d --restart=always --name dl -v ~/docker/aria2/conf/:/aria2/conf/ -v ~/samba/:/aria2/data/ -l='traefik.http.routers.dl.rule=Host(`oo`)' -l="traefik.http.services.dl.loadbalancer.server.port=8080" -l="traefik.enable=true" -e PUID=1000 -e PGID=1000 hurlenko/aria2-ariang
+docker run -d --restart=always --name dl -v ~/docker/aria2/conf/:/aria2/conf/ -v ~/samba/:/aria2/data/ -l='traefik.http.routers.dl.rule=Host(`oo`)' -l="traefik.http.services.dl.loadbalancer.server.port=8080" -l="traefik.enable=true" -e PUID=1000 -e PGID=1000 hurlenko/aria2-ariang:1.1.7
+# 1.1.7 until issue fixed https://github.com/hurlenko/aria2-ariang-docker/issues/5
 
 # watchtower
 docker run -d --restart=always --name=watchtower -v=/var/run/docker.sock:/var/run/docker.sock:ro containrrr/watchtower --cleanup
