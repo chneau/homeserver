@@ -14,6 +14,8 @@ sudo mount /dev/sda1 ~/samba/hdd -t exfat -o uid=c,gid=c
 docker run \
     --detach \
     --restart always \
+    --no-healthcheck \
+    --security-opt apparmor=unconfined \
     --name samba \
     --hostname samba \
     --volume ~/samba:/c \
@@ -27,6 +29,8 @@ docker run \
 docker run \
     --detach \
     --restart always \
+    --no-healthcheck \
+    --security-opt apparmor=unconfined \
     --name dl \
     --hostname dl \
     --volume ~/docker/aria2/conf/:/aria2/conf/ \
@@ -34,7 +38,7 @@ docker run \
     --env PUID=1000 \
     --env PGID=1000 \
     --env ARIA2RPCPORT=80 \
-    --publish 80:8080 \
+    --publish 0.0.0.0:80:8080 \
     hurlenko/aria2-ariang
 ```
 
