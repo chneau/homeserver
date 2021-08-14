@@ -1,9 +1,7 @@
-version: "3.8"
-
 services:
   deconz:
-    container_name: deconz
     image: marthoc/deconz:stable
+    container_name: deconz
     restart: always
     environment:
       - DECONZ_DEVICE=/dev/ttyACM0
@@ -18,12 +16,41 @@ services:
       - ~/docker/deconz:/root/.local/share/dresden-elektronik/deCONZ
     restart: unless-stopped
 
-  homeassistant:
-    container_name: home-assistant
+  hass:
     image: homeassistant/home-assistant:stable
+    container_name: hass
     restart: always
     environment:
       - TZ=Europe/London
     volumes:
       - ~/docker/hassio:/config
     network_mode: host # 8123
+
+  samba:
+    image: dperson/samba
+    container_name: samba
+    restart: always
+    volumes:
+      - ~/samba:/c
+    environment:
+      - USERID=1000
+      - GROUPID=1000
+      - VETO=yes
+    healthcheck:
+      disable: true
+    network_mode: host
+    command: -p -n -r -u "c;c" -u "Sarah;c" -s "c;/c;no;no;no;c,Sarah;none;c,Sarah" -W -S
+
+  dl:
+    image: hurlenko/aria2-ariang
+    container_name: dl
+    restart: always
+    volumes:
+      - ~/docker/aria2/conf/:/aria2/conf/
+      - ~/samba/:/aria2/data/
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - DOMAIN=0.0.0.0:80
+      - ARIA2RPCPORT=80
+    network_mode: host
