@@ -11,10 +11,9 @@ services:
       - TZ=Europe/London
     devices:
       - /dev/ttyACM0:/dev/ttyACM0
-    network_mode: host
     volumes:
       - ~/docker/deconz:/root/.local/share/dresden-elektronik/deCONZ
-    restart: unless-stopped
+    network_mode: host
 
   hass:
     image: homeassistant/home-assistant:stable
@@ -30,27 +29,27 @@ services:
     image: dperson/samba
     container_name: samba
     restart: always
-    volumes:
-      - ~/samba:/c
     environment:
       - USERID=1000
       - GROUPID=1000
       - VETO=yes
+    volumes:
+      - ~/samba:/c
+    network_mode: host
     healthcheck:
       disable: true
-    network_mode: host
     command: -p -n -r -u "c;c" -u "Sarah;c" -s "c;/c;no;no;no;c,Sarah;none;c,Sarah" -W -S
 
   dl:
     image: hurlenko/aria2-ariang
     container_name: dl
     restart: always
-    volumes:
-      - ~/docker/aria2/conf/:/aria2/conf/
-      - ~/samba/:/aria2/data/
     environment:
       - PUID=1000
       - PGID=1000
       - DOMAIN=0.0.0.0:80
       - ARIA2RPCPORT=80
+    volumes:
+      - ~/docker/aria2/conf/:/aria2/conf/
+      - ~/samba/:/aria2/data/
     network_mode: host
