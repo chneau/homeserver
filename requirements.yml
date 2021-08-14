@@ -1,2 +1,0 @@
-- name: geerlingguy.docker
-  src: git+https://github.com/geerlingguy/ansible-role-docker

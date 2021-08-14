@@ -1,7 +1,0 @@
-- name: Installing docker
-  hosts: all
-  strategy: free
-  become: true
-  gather_facts: true
-  roles:
-    - geerlingguy.docker
