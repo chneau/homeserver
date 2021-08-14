@@ -4,36 +4,26 @@ services:
   deconz:
     container_name: deconz
     image: marthoc/deconz:stable
-    ports:
-      - 8080:80
-      - 8443:8443
+    restart: always
     environment:
       - DECONZ_DEVICE=/dev/ttyACM0
       - DECONZ_VNC_MODE=0
       - DECONZ_WS_PORT=8443
+      - DECONZ_WEB_PORT=8080
       - TZ=Europe/London
     devices:
       - /dev/ttyACM0:/dev/ttyACM0
+    network_mode: host
     volumes:
-      - /opt/deconz:/root/.local/share/dresden-elektronik/deCONZ
-    networks:
-      - rpi
+      - ~/docker/deconz:/root/.local/share/dresden-elektronik/deCONZ
     restart: unless-stopped
 
   homeassistant:
     container_name: home-assistant
     image: homeassistant/home-assistant:stable
-    volumes:
-      - ~/docker/hassio:/config
+    restart: always
     environment:
       - TZ=Europe/London
-    logging:
-      driver: none
-    networks:
-      - rpi
-    ports:
-      - "8123/tcp"
-
-networks:
-  rpi:
-    external: true
+    volumes:
+      - ~/docker/hassio:/config
+    network_mode: host # 8123
