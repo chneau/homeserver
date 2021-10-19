@@ -50,6 +50,6 @@ services:
       - DOMAIN=0.0.0.0:80
       - ARIA2RPCPORT=80
     volumes:
-      - ~/docker/aria2/conf/:/aria2/conf/
+      - ~/docker/aria2/conf:/aria2/conf
       - ~/samba/:/aria2/data/
     network_mode: host
