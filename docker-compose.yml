@@ -3,14 +3,13 @@ services:
     image: marthoc/deconz:stable
     container_name: deconz
     restart: always
+    privileged: true
     environment:
       - DECONZ_DEVICE=/dev/ttyACM0
       - DECONZ_VNC_MODE=0
       - DECONZ_WS_PORT=8443
       - DECONZ_WEB_PORT=8080
       - TZ=Europe/London
-    devices:
-      - /dev/ttyACM0:/dev/ttyACM0
     volumes:
       - ~/docker/deconz/:/root/.local/share/dresden-elektronik/deCONZ/
     network_mode: host
